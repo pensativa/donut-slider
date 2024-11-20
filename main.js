@@ -15,25 +15,25 @@ const donatData = {
         class: 'blueberry',
         title: 'Blueberry Donut',
         text: 'Soft, cake-style donut infused with the&nbsp;sweet, tangy flavor of&nbsp;blueberries and&nbsp;finished with a&nbsp;light, sugary glaze that adds the&nbsp;perfect amount of&nbsp;sweetness',
-        imgUrl: '/img/bluberry-donut.webp'
+        imgUrl: 'img/bluberry-donut.webp'
     },
     2: {
         class: 'strawberry',
         title: 'Strawberry Donut',
         text: 'Bursting with fruity flavor, this donut features vibrant pink strawberry frosting and is&nbsp;generously adorned with rainbow sprinkles for&nbsp;a&nbsp;fun, sugary delight',
-        imgUrl: '/img/strawberry-donut.webp'
+        imgUrl: 'img/strawberry-donut.webp'
     },
     3: {
         class: 'chocolate',
         title: 'Chocolate Donut',
         text: 'Rich chocolate-flavored donut topped with a&nbsp;sweet glaze and&nbsp;colorful sprinkles, offering the&nbsp;perfect blend of&nbsp;softness and crunch in&nbsp;every bite',
-        imgUrl: '/img/chocolate-donut.webp'
+        imgUrl: 'img/chocolate-donut.webp'
     },
     4: {
         class: 'blue-sky',
         title: 'Blue sky Donut',
         text: 'Donut coated with a&nbsp;blueberry-flavoured blue compound coating, decorated withstrings of&nbsp;white compound coating and&nbsp;with&nbsp;multicoloured sugar pearls',
-        imgUrl: '/img/blue-sky-donut.webp'
+        imgUrl: 'img/blue-sky-donut.webp'
     }
 }
 
@@ -43,6 +43,12 @@ const sliderBtnPrev = document.querySelector('.slider__button--prev');
 const sliderBtnNext = document.querySelector('.slider__button--next');
 const donutTitlePrev = document.querySelector('.main__title--prev');
 const donutTitleNext = document.querySelector('.main__title--next');
+const donutTitle = document.querySelectorAll('.main__title');
+const donutText = document.querySelector('.main__text');
+const donutImage = document.querySelector('.slider__image');
+const body = document.querySelector('.body');
+const menuLinks = document.querySelectorAll('.header__menu-link');
+
 
 let numOfSlides = 4;
 let numIndex = 1;
@@ -53,10 +59,6 @@ donutTitleNext.innerHTML = donatData[numIndex + 1].title;
 
 //Changing slides' main function
 function changeSlides(index, direction) {
-    const donutTitle = document.querySelectorAll('.main__title');
-    const donutText = document.querySelector('.main__text');
-    const donutImage = document.querySelector('.slider__image');
-    const body = document.querySelector('.body');
 
     setTimeout(() => {  
         donutTitle[0].innerHTML = donatData[index].title;
@@ -101,6 +103,23 @@ function changeSlides(index, direction) {
     body.classList.remove(`body--${donatData[prevNumIndex].class}`);
     body.classList.add(`body--${donatData[index].class}`)
 }
+
+menuLinks.forEach((link, i) => {
+    link.onclick = (e) => {
+        e.preventDefault;
+        let status;
+        const headerMenu = document.querySelector('.header');
+        headerMenu.classList.toggle('header--open');
+        prevNumIndex = numIndex;
+        numIndex = i + 1;
+        if (numIndex < prevNumIndex) {
+            status = 'up';
+        } else {
+            status = 'down';
+        }
+        changeSlides(numIndex, status);
+    }
+});
 
 //Changing slides by button prev
 sliderBtnPrev.onclick = () => {

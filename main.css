@@ -255,7 +255,7 @@ h1, h2, h3 {
 .slider__container::after {
     width: 240vw;
     height: 240vw;
-    background: url('/img/menu-cercal.svg') no-repeat center/contain;
+    background: url('img/menu-cercal.svg') no-repeat center/contain;
 }
 
 .slider__container::before {
