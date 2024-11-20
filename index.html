@@ -35,7 +35,11 @@
     <main class="main">
         <section class="main__textbox">
             <div class="container">
-                <h1 class="main__title">Blueberry Donut</h1>
+                <div class="main__titlebox"> 
+                    <h1 class="main__title">Blueberry Donut</h1>
+                    <h2 class="main__title main__title--prev">Blueberry</h2>
+                    <h2 class="main__title main__title--next">Donut</h2>
+                </div>
                 <p class="main__text">Soft, cake-style donut infused with the&nbsp;sweet, tangy flavor of&nbsp;blueberries and&nbsp;finished with a&nbsp;light, sugary glaze that adds the&nbsp;perfect amount of&nbsp;sweetness</p>
             </div>
         </section>
@@ -43,6 +47,8 @@
             <div class="slider__container">
                 <div class="slider__image-block"><img src="/img/bluberry-donut.webp" alt="Blueberry Donut" class="slider__image" width="800" height="800"></div>
             </div>
+            <button class="slider__button slider__button--next hidden"></button>
+            <button class="slider__button slider__button--prev hidden"></button>
         </section>
     </main>
     <script src="/main.js"></script>

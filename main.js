@@ -8,10 +8,11 @@ function togglerMenuStatus() {
 }
 togglerMenuStatus();
 
-//Changing donut
+//Slider scripts
+
 const donatData = {
     1: {
-        class: 'bluberry',
+        class: 'blueberry',
         title: 'Blueberry Donut',
         text: 'Soft, cake-style donut infused with the&nbsp;sweet, tangy flavor of&nbsp;blueberries and&nbsp;finished with a&nbsp;light, sugary glaze that adds the&nbsp;perfect amount of&nbsp;sweetness',
         imgUrl: '/img/bluberry-donut.webp'
@@ -36,13 +37,121 @@ const donatData = {
     }
 }
 
-function changeDonut(n) {
-    const donutTitle = document.querySelector('.main__title');
+const sliderContainer = document.querySelector('.slider__container');
+const slides = document.querySelectorAll('.slider__image-block');
+const sliderBtnPrev = document.querySelector('.slider__button--prev');
+const sliderBtnNext = document.querySelector('.slider__button--next');
+const donutTitlePrev = document.querySelector('.main__title--prev');
+const donutTitleNext = document.querySelector('.main__title--next');
+
+let numOfSlides = 4;
+let numIndex = 1;
+let prevNumIndex = 1;
+
+donutTitlePrev.innerHTML = donatData[numOfSlides].title;
+donutTitleNext.innerHTML = donatData[numIndex + 1].title;
+
+//Changing slides' main function
+function changeSlides(index, direction) {
+    const donutTitle = document.querySelectorAll('.main__title');
     const donutText = document.querySelector('.main__text');
     const donutImage = document.querySelector('.slider__image');
     const body = document.querySelector('.body');
 
-    donutTitle.innerHTML = donatData[n].title;
-    donutText.innerHTML = donatData[n].text;
-    donutImage.setAttribute('src', donatData[n].imgUrl);
+    setTimeout(() => {  
+        donutTitle[0].innerHTML = donatData[index].title;
+        if (index == 1) {
+            donutTitlePrev.innerHTML = donatData[numOfSlides].title;
+            donutTitleNext.innerHTML = donatData[index + 1].title;
+        } else if (index == numOfSlides) {
+            donutTitlePrev.innerHTML = donatData[index - 1].title;
+            donutTitleNext.innerHTML = donatData[1].title;
+        } else {
+            donutTitlePrev.innerHTML = donatData[index - 1].title;
+            donutTitleNext.innerHTML = donatData[index + 1].title;
+        }
+        donutTitle.forEach(title => {
+            title.classList.remove('down');
+            title.classList.remove('up');
+        });
+    }, 800);
+
+
+    donutText.style.opacity = '0';
+    setTimeout(() => {
+        donutText.innerHTML = donatData[index].text;
+        donutText.style.opacity = '1';
+    }, 600);
+
+    if (direction === 'up') {
+        donutImage.style.animationName = 'donutAnimationReverse';
+        donutTitle.forEach(title => title.classList.add('up'));
+    } else {
+        donutImage.style.animationName = 'donutAnimation';
+        donutTitle.forEach(title => title.classList.add('down'));
+    }
+    
+    setTimeout(() => {
+        donutImage.setAttribute('src', donatData[index].imgUrl);
+    }, 700);
+    setTimeout(() => {
+        donutImage.style.animationName = '';        
+    }, 1050);
+
+    body.classList.remove(`body--${donatData[prevNumIndex].class}`);
+    body.classList.add(`body--${donatData[index].class}`)
+}
+
+//Changing slides by button prev
+sliderBtnPrev.onclick = () => {
+    prevNumIndex = numIndex;
+    if (numIndex !== 1) {
+        numIndex--;
+    } else {
+        numIndex = numOfSlides;
+    }
+    
+    changeSlides(numIndex, 'down');
+}
+
+//Changing slides by button next
+sliderBtnNext.onclick = () => {
+    prevNumIndex = numIndex;
+    if (numIndex !== numOfSlides) {
+        numIndex++;
+    } else {
+        numIndex = 1;
+    }
+
+    changeSlides(numIndex, 'up');
+}
+
+//Changing slides by swipe
+
+sliderContainer.addEventListener("touchstart", touchStart, false);
+sliderContainer.addEventListener("touchmove", touchMove, false);
+
+let xDown, 
+    yDown;
+
+function touchStart(evt) {
+    const { clientX, clientY } = evt.touches[0];
+    xDown = clientX; yDown = clientY;
+}
+
+function touchMove(evt) {
+    if (!xDown || !yDown) {
+        return; 
+    }
+
+    const { clientX, clientY } = evt.touches[0];
+
+    const xDiff = xDown - clientX;
+    const yDiff = yDown - clientY;
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        xDiff > 0 ? sliderBtnNext.click() : sliderBtnPrev.click();
+    }
+    
+    xDown = yDown = null;
 }
