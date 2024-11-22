@@ -84,6 +84,11 @@ h1, h2, h3 {
     transition: 0.8s cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
+.header {
+    position: relative;
+    z-index: 10;
+}
+
 .header .container {
     padding-top: 4.8vw;
     padding-bottom: 9.1vw;
@@ -310,5 +315,109 @@ h1, h2, h3 {
     }
     100% {
         transform: translateX(-50%) rotate(360deg);
+    }
+}
+
+/*Mobile lanscape*/
+@media (orientation: landscape) {
+    .container {
+        padding: 0 3.1vw;
+    }
+
+    .header .container {
+        padding-top: 2.1vw;
+        padding-bottom: 0;
+    }
+
+    .header__menu-icon {
+        height: 3.4vw;
+    }
+
+    .header__menu-line {
+        width: 4.3vw;
+        height: 0.4vw;
+    }
+
+    .header--open .header__menu-icon {
+        transform: translateX(90vw);
+    }
+
+    .header--open .header__menu-line:first-child {
+        transform: translate(-1.4vw, 1.4vw) rotate(45deg);
+    }
+
+    .header--open .header__menu-line:last-child {
+        transform: translate(-1.4vw, -1.6vw) rotate(-45deg);
+    }
+
+    .header__menu-item {
+        font-size: 5vw;
+        margin-bottom: 2vw;
+    }
+
+    .header__menu-link {
+        border-bottom: 0.6vw solid transparent;
+    }
+
+    .header__cart-icon {
+        width: 4vw;
+    }
+
+    .header__cart-icon path {
+        stroke-width: 0.5vw;
+    }
+
+    .main {
+        position: relative;
+    }
+
+    .main__textbox {
+        margin-top: -5vw;
+        text-align: left;
+    }
+
+    .main__title {
+        font-size: 5vw;
+        margin-bottom: 3.1vw;
+        text-align: center;
+    }
+
+    .main__text {
+        font-size: 2vw;
+        width: 28vw;    
+        line-height: 1.5;
+    }
+
+    .slider {
+        height: 85vh;
+        width: 72vw;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .slider__container {
+        padding: 0;
+        position: absolute;
+        width: 75vw;
+        height: 75vw;
+        top: 0;
+        left: 0;
+        transform: translateX(0);
+    }
+
+    .slider__container::before {
+        width: 65vw;
+        height: 65vw;
+    }
+
+    .slider__container::after {
+        width: 83vw;
+        height: 83vw;
+    }
+
+    .slider__image {
+        width: 75vw;
+        top: 1vw;
     }
 }
